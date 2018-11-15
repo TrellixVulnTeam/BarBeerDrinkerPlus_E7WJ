@@ -82,3 +82,12 @@ def get_bar_frequent_counts():
         rs = con.execute(query)
         results = [dict(row) for row in rs]
         return results
+
+def get_largest_spenders(bar_name):
+    with engine.connect() as con:
+        query = sql.text("select m.drinker as drinker, t.total as spendingAmount from transactions t left join makes m on t.bar = m.bar and t.transactionID = m.transactionID where t.bar = :bar;")
+        rs = con.execute(query, bar=bar_name)
+        results = [dict(row) for row in rs]
+        for r in results:
+            r['spendingAmount'] = float(r['spendingAmount'])
+        return results

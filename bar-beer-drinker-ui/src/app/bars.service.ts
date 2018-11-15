@@ -41,5 +41,8 @@ export class BarsService {
   getFrequentCounts() {
     return this.http.get<any[]>('/api/frequents-data');
  }
+ getLargestSpenders(bar: string){
+   return this.http.get<any[]>('/api/large-spenders/' + bar);
+ }
 
 }

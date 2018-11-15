@@ -63,3 +63,17 @@ def get_bar_frequent_counts():
         return jsonify(database.get_bar_frequent_counts())
     except Exception as e:
         return make_response(str(e), 500)
+
+@app.route('/api/large-spenders/<name>', methods=['GET'])
+def get_largest_spenders(name):
+    try:
+        if name is None:
+            raise ValueError('Bar is not specified.')
+        bar = database.find_bar(name)
+        if bar is None:
+            return make_response("No bar found with the given name.", 404)
+        return jsonify(database.get_largest_spenders(name))
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
