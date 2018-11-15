@@ -75,3 +75,10 @@ def get_bar_menu(bar_name):
         for i, _ in enumerate(results):
             results[i]['price'] = float(results[i]['price'])
         return results
+
+def get_bar_frequent_counts():
+    with engine.connect() as con:
+        query = sql.text('SELECT bar, count(*) as frequentCount FROM frequents GROUP BY bar;')
+        rs = con.execute(query)
+        results = [dict(row) for row in rs]
+        return results

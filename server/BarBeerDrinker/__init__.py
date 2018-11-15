@@ -56,3 +56,10 @@ def get_menu(name):
         return make_response(str(e), 400)
     except Exception as e:
         return make_response(str(e), 500)
+
+@app.route('/api/frequents-data', methods=['GET'])
+def get_bar_frequent_counts():
+    try:
+        return jsonify(database.get_bar_frequent_counts())
+    except Exception as e:
+        return make_response(str(e), 500)
