@@ -9,13 +9,15 @@ import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
 import { BarDetailsComponent } from './bar-details/bar-details.component';
 import { DrinkerComponentComponent } from './drinker-component/drinker-component.component';
+import { InsightComponent } from './insight/insight.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     WelcomeComponent,
     BarDetailsComponent,
-    DrinkerComponentComponent
+    DrinkerComponentComponent,
+    InsightComponent
   ],
   imports: [
     BrowserModule,
