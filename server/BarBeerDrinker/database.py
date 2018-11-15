@@ -31,6 +31,15 @@ def get_bars():
         return results;
 
 
+def get_drinkers():
+    """
+    Connect to the database and retrieve a list of all the bars and their information
+    """
+    with engine.connect() as con:
+        rs = con.execute("SELECT name,phone,city,state,addr FROM drinkers")
+        results = [dict(row) for row in rs]
+        return results;
+
 def find_bar(name):
     with engine.connect() as con:
         query = sql.text("SELECT name, city, state, weekdayOpen, weekdayClose, weekendOpen, weekendClose FROM bars WHERE name = :name;")

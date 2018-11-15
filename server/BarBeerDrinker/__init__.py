@@ -17,6 +17,9 @@ def hello_world():
 def get_bars():
     return jsonify(database.get_bars())
 
+@app.route('/api/drinkers', methods=["GET"])
+def get_drinkers():
+    return jsonify(database.get_drinkers())
 
 @app.route('/api/bar/<name>', methods=["GET"])
 def find_bar(name):
