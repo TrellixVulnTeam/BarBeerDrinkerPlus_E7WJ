@@ -24,12 +24,12 @@
         <th>Price</th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item>
+    <ng-template pTemplate="body" let-items>
       <tr>
-        <td>{{ item.name }}</td>
-        <td>{{ item.manufacturer }}</td>
-        <td>{{ item.itemType }}</td>
-        <td>{{ item.price | currency }}</td>
+        <td>{{ items.item }}</td>
+        <td>{{ items.manufacturer }}</td>
+        <td>{{ items.itemType }}</td>
+        <td>{{ items.price | currency }}</td>
       </tr>
     </ng-template>
   </p-table>

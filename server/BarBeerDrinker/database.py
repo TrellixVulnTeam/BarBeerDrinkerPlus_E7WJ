@@ -69,7 +69,7 @@ def filter_beers(max_price):
 
 def get_bar_menu(bar_name):
     with engine.connect() as con:
-        query = sql.text('SELECT a.bar, a.item, a.price, b.manufacturer b.itemType as likes FROM sells as a JOIN items AS b ON a.item = b.name WHERE a.bar = :bar;')
+        query = sql.text('SELECT DISTINCT a.bar, a.item, a.price, b.manufacturer, b.itemType FROM sells as a JOIN items AS b ON a.item = b.name WHERE a.bar = :bar;')
         rs = con.execute(query, bar=bar_name)
         results = [dict(row) for row in rs]
         for i, _ in enumerate(results):
