@@ -100,3 +100,12 @@ def get_popular_beers(bar_name):
         for r in results:
             r['AmountSold'] = int(r['AmountSold'])
         return results
+
+def get__sells_most_beers(bar_name):
+    with engine.connect() as con:
+        query = sql.text("select i.manufacturer AS Manufacturer, SUM(s.quantity) AS BeersSold from items i,(select c.item,c.quantity,t.bar,t.transactionID,t.time,t.total,t.tip from transactions t left join contains c on t.bar = c.bar and t.transactionID = c.transactionID where t.bar =:bar) s where i.name = s.item group by manufacturer;")
+        rs = con.execute(query, bar=bar_name)
+        results = [dict(row) for row in rs]
+        for r in results:
+            r['BeersSold'] = int(r['BeersSold'])
+        return results

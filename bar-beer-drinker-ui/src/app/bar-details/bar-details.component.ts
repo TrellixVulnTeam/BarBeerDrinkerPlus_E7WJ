@@ -75,6 +75,23 @@ export class BarDetailsComponent implements OnInit {
       this.renderChart(drinkers, spending);
     });
 
+    barService.getManufacturerSells(this.barName).subscribe(
+      data => {
+        console.log(data);
+        var manufacturers = [];
+        var beerSold = [];
+        data.sort((a, b) => a.BeersSold < b.BeersSold ? 1 : a.BeersSold > b.BeersSold ? -1 : 0)
+        data.forEach(manu => {
+          manufacturers.push(manu.Manufacturer);
+          beerSold.push(manu.BeersSold);
+
+        }
+    );
+    manufacturers = manufacturers.splice(0,5);
+    beerSold = beerSold.splice(0,5);
+    this.renderManuChart(manufacturers, beerSold);
+  });
+
  }
 );
 }
@@ -124,6 +141,49 @@ renderChart(drinkers: string[], spending: number[]) {
   });
 }
 
+renderManuChart(manufacturers: string[], beerSold: number[]) {
+  Highcharts.chart('ManufacturersGraph', {
+    chart: {
+      type: 'column'
+    },
+    title: {
+      text: 'Top Manufacturers'
+    },
+    xAxis: {
+      categories: manufacturers,
+      title: {
+        text: 'Manufacturers'
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Beers Sold'
+      },
+      labels: {
+        overflow: 'justify'
+      }
+    },
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    legend: {
+      enabled: false
+    },
+    credits: {
+      enabled: false
+    },
+    series: [{
+      data: beerSold
+    }]
+  });
+}
+
+
 
 renderBeerChart(sold: number[], beers: string[]) {
   Highcharts.chart('popularBeersGraph', {
@@ -134,7 +194,7 @@ renderBeerChart(sold: number[], beers: string[]) {
       text: 'Most Popular Beers Sold'
     },
     xAxis: {
-      categories: beers
+      categories: beers,
       title: {
         text: 'Beers'
       }

@@ -49,4 +49,8 @@ export class BarsService {
    return this.http.get<any[]>('/api/popular-beers/' + bar);
  }
 
+ getManufacturerSells(bar: string){
+   return this.http.get<any[]>('/api/manufacturer-sells/' + bar);
+ }
+
 }
