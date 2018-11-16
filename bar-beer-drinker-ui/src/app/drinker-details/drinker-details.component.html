@@ -1,0 +1,52 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ drinkerName }}</h1>
+    <p class="drinker-details" *ngIf="drinkerDetails">
+      {{ drinkerDetails?.city }} <span *ngIf="drinkerDetails.city && drinkerDetails.state">| </span>{{ drinkerDetails ?.state }}
+ <br>
+    </p>
+  </div>
+</div>
+
+<!-- <div class="container">
+  <h2 class="text-center font-weight-light">Menu</h2>
+  <br>
+  <p-table [value]="menu">
+    <ng-template pTemplate="header">
+      <tr>
+        <th>Items</th>
+        <th>ItemType</th>
+        <th>Menufacturer</th>
+        <th>Price</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-items>
+      <tr>
+        <td>{{ items.item }}</td>
+        <td>{{ items.manufacturer }}</td>
+        <td>{{ items.itemType }}</td>
+        <td>{{ items.price | currency }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+  <br>
+  <br>
+</div> -->
+
+<!-- <div class="popularBeersGraph">
+  <br>
+  <div id="popularBeersGraph"></div>
+  <br><br>
+</div>
+
+<div class="largestSpendersGraph">
+ <br>
+ <div id="barSpendersGraph"></div>
+ <br><br>
+</div>
+
+<div class="ManufacturersGraph">
+ <br>
+ <div id="ManufacturersGraph"></div>
+ <br><br>
+</div> -->
