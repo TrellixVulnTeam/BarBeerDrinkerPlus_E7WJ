@@ -8,13 +8,6 @@ export interface Drinker {
   state: string;
   addr: string;
 }
-
-export interface DrinkerMenuItem {
-  item: string;
-  itemType: string;
-  manufacturer: string;
-  price: number;
-}
 @Injectable({
   providedIn: 'root'
 })
@@ -30,9 +23,5 @@ export class DrinkersService {
 
   getDrinker(drinker: string) {
     return this.http.get<Drinker>('api/drinkers/' + drinker);
-  }
-
-  getMenu(drinker: string) {
-    return this.http.get<DrinkerMenuItem[]>('/api/menu/' + drinker);
   }
 }

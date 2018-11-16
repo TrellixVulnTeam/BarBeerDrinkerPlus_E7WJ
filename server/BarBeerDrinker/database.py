@@ -54,6 +54,16 @@ def find_bar(name):
         result['weekendClose'] = str(result['weekendClose'])
         return result
 
+def find_drinker(name):
+    with engine.connect() as con:
+        query = sql.text("SELECT name, phone, city, state, addr FROM drinkers WHERE name = :name;")
+        rs = con.execute(query, name=name)
+        result = rs.first()
+        if result is None:
+            return None
+        result = dict(result)
+        return result
+
 
 def filter_beers(max_price):
     with engine.connect() as con:

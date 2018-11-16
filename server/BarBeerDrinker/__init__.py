@@ -35,6 +35,19 @@ def find_bar(name):
     except Exception as e:
         return make_response(str(e), 500)
 
+@app.route('/api/drinkers/<name>', methods=["GET"])
+def find_drinker(name):
+    try:
+        if name is None:
+            raise ValueError("Drinker is not specified.")
+        drinker = database.find_drinker(name)
+        if drinker is None:
+            return make_response("No drinker found with the given name.", 404)
+        return jsonify(drinker)
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
 
 @app.route('/api/beers_cheaper_than', methods=["POST"])
 def find_beers_cheaper_than():
