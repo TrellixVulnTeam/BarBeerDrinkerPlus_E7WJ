@@ -91,3 +91,12 @@ def get_largest_spenders(bar_name):
         for r in results:
             r['spendingAmount'] = float(r['spendingAmount'])
         return results
+
+def get_popular_beers(bar_name):
+    with engine.connect() as con:
+        query = sql.text("select c.item as beers, sum(c.quantity) as AmountSold from items i, transactions t left join contains c ON t.bar = c.bar and t.transactionID = c.transactionID where t.bar =:bar AND i.name = c.item and i.itemType = 'beer' group by c.item;")
+        rs = con.execute(query, bar=bar_name)
+        results = [dict(row) for row in rs]
+        for r in results:
+            r['AmountSold'] = int(r['AmountSold'])
+        return results

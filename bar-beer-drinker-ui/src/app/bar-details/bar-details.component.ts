@@ -42,6 +42,22 @@ export class BarDetailsComponent implements OnInit {
         }
       );
 
+      barService.getPopularBeers(this.barName).subscribe(
+        data => {
+          console.log(data);
+          var beers = [];
+          var sold = [];
+          data.sort((a, b) => a.Amountsold < b.AmountSold ? 1 : a.AmountSold > b.AmountSold ? -1 : 0)
+          data.forEach(beer => {
+            sold.push(beer.AmountSold);
+            beers.push(beer.beers);
+          }
+        );
+        beers = beers.splice(0,10);
+        sold = sold.splice(0,10);
+        this.renderBeerChart(sold, beers);
+      });
+
       barService.getLargestSpenders(this.barName).subscribe(
         data => {
           console.log(data);
@@ -58,6 +74,7 @@ export class BarDetailsComponent implements OnInit {
       spending = spending.splice(0,20);
       this.renderChart(drinkers, spending);
     });
+
  }
 );
 }
@@ -103,6 +120,49 @@ renderChart(drinkers: string[], spending: number[]) {
     },
     series: [{
       data: spending
+    }]
+  });
+}
+
+
+renderBeerChart(sold: number[], beers: string[]) {
+  Highcharts.chart('popularBeersGraph', {
+    chart: {
+      type: 'bar'
+    },
+    title: {
+      text: 'Most Popular Beers Sold'
+    },
+    xAxis: {
+      categories: beers
+      title: {
+        text: 'Beers'
+      }
+    },
+    yAxis: {
+      min: 0,
+      title: {
+        text: 'Number of Beers Sold'
+      },
+      labels: {
+        overflow: 'justify'
+      }
+    },
+    plotOptions: {
+      bar: {
+        dataLabels: {
+          enabled: true
+        }
+      }
+    },
+    legend: {
+      enabled: false
+    },
+    credits: {
+      enabled: false
+    },
+    series: [{
+      data: sold
     }]
   });
 }

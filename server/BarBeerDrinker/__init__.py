@@ -77,3 +77,17 @@ def get_largest_spenders(name):
         return make_response(str(e), 400)
     except Exception as e:
         return make_response(str(e), 500)
+
+@app.route('/api/popular-beers/<name>', methods=['GET'])
+def get_popular_beers(name):
+    try:
+        if name is None:
+            raise ValueError('Bar is not specified.')
+        bar = database.find_bar(name)
+        if bar is None:
+            return make_response("No bar found with the given name.", 404)
+        return jsonify(database.get_popular_beers(name))
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
