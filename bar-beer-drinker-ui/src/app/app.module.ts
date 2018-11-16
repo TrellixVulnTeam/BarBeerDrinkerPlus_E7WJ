@@ -22,7 +22,7 @@ import { DrinkerDetailsComponent } from './drinker-details/drinker-details.compo
     DrinkerComponentComponent,
     InsightComponent,
     BeerDetailsComponent,
-    BeerComponentComponent
+    BeerComponentComponent,
     DrinkerDetailsComponent
   ],
   imports: [
