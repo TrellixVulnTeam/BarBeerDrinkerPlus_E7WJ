@@ -10,6 +10,8 @@ import { WelcomeComponent } from './welcome/welcome.component';
 import { BarDetailsComponent } from './bar-details/bar-details.component';
 import { DrinkerComponentComponent } from './drinker-component/drinker-component.component';
 import { InsightComponent } from './insight/insight.component';
+import { BeerDetailsComponent } from './beer-details/beer-details.component';
+import { BeerComponentComponent } from './beer-component/beer-component.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { InsightComponent } from './insight/insight.component';
     WelcomeComponent,
     BarDetailsComponent,
     DrinkerComponentComponent,
-    InsightComponent
+    InsightComponent,
+    BeerDetailsComponent,
+    BeerComponentComponent
   ],
   imports: [
     BrowserModule,
