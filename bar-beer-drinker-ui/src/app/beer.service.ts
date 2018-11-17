@@ -22,4 +22,9 @@ export class BeerService {
   getBeer(beer: string) {
     return this.http.get<Beer>('api/beer/' + beer);
   }
+
+  getBestSellingLocations(beer: string) {
+    return this.http.get<Beer>('api/best-selling-locations/' + beer);
+  }
+
 }

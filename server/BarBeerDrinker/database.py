@@ -30,6 +30,24 @@ def get_bars():
             '''
         return results;
 
+def get_beers():
+    """
+    Connect to the database and retrieve a list of all the bars and their information
+    """
+    with engine.connect() as con:
+        rs = con.execute("SELECT name, manufacturer from items WHERE itemType = 'beer';")
+        results = [dict(row) for row in rs]
+        return results;
+
+def find_beer(name):
+    with engine.connect() as con:
+        query = sql.text("SELECT name, manufacturer from items WHERE name=:name;")
+        rs = con.execute(query, name=name)
+        result = rs.first()
+        if result is None:
+            return None
+        result = dict(result)
+        return result
 
 def get_drinkers():
     """
@@ -125,6 +143,15 @@ def get__sells_most_beers(bar_name):
     with engine.connect() as con:
         query = sql.text("select i.manufacturer AS Manufacturer, SUM(s.quantity) AS BeersSold from items i,(select c.item,c.quantity,t.bar,t.transactionID,t.time,t.total,t.tip from transactions t left join contains c on t.bar = c.bar and t.transactionID = c.transactionID where t.bar =:bar) s where i.name = s.item group by manufacturer;")
         rs = con.execute(query, bar=bar_name)
+        results = [dict(row) for row in rs]
+        for r in results:
+            r['BeersSold'] = int(r['BeersSold'])
+        return results
+
+def get__best_sold_in_bars(beer_name):
+    with engine.connect() as con:
+        query = sql.text("select t.bar as Bar, c.quantity as, BeersSold from transactions t left join contains c on t.bar = c.bar and t.transactionID = c.transactionID where c.item =:beer;")
+        rs = con.execute(query, beer=beer_name)
         results = [dict(row) for row in rs]
         for r in results:
             r['BeersSold'] = int(r['BeersSold'])
