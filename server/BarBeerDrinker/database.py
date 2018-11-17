@@ -156,3 +156,12 @@ def get__best_selling_locations(beer_name):
         for r in results:
             r['NumberSold'] = int(r['NumberSold'])
         return results
+
+def get__top_consumers(beer_name):
+    with engine.connect() as con:
+        query = sql.text("select m.drinker as Drinker, SUM(s.quantity) as AmountConsumed from makes m,(select c.item,c.quantity,t.bar,t.transactionID from transactions t left join contains c on t.bar = c.bar and t.transactionID = c.transactionID where c.item = :beer) s where m.bar = s.bar and m.transactionID = s.transactionID group by Drinker;")
+        rs = con.execute(query, beer=beer_name)
+        results = [dict(row) for row in rs]
+        for r in results:
+            r['AmountConsumed'] = int(r['AmountConsumed'])
+        return results

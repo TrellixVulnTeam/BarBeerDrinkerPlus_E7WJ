@@ -167,3 +167,18 @@ def get__best_selling_locations(name):
         return make_response(str(e), 400)
     except Exception as e:
         return make_response(str(e), 500)
+
+
+@app.route('/api/top_consumers/<name>', methods=['GET'])
+def get__top_consumers(name):
+    try:
+        if name is None:
+            raise ValueError('Beer is not specified.')
+        beer = database.find_beer(name)
+        if beer is None:
+            return make_response("No beer found with the given name.", 404)
+        return jsonify(database.get__top_consumers(name))
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)

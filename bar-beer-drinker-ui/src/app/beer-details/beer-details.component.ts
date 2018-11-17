@@ -22,6 +22,7 @@ export class BeerDetailsComponent implements OnInit {
   ) {
     route.paramMap.subscribe((paramMap) => {
       this.beerName = paramMap.get('beer');
+
       beerService.getBeer(this.beerName).subscribe(
         data => {
           this.beerDetails = data;
@@ -36,6 +37,23 @@ export class BeerDetailsComponent implements OnInit {
           }
         }
       );
+
+      beerService.getTopConsumers(this.beerName).subscribe(
+        data => {
+          console.log(data);
+          var drinkers = [];
+          var consumed = [];
+          data.sort((a, b) => a.AmountConsumed < b.AmountConsumed ? 1 : a.AmountConsumed > b.AmountConsumed ? -1 : 0)
+          data.forEach(drinker => {
+            drinkers.push(drinker.Drinker);
+            consumed.push(drinker.AmountConsumed);
+          }
+        );
+        drinkers = drinkers.splice(0,10);
+        consumed = consumed.splice(0,10);
+        this.renderTopConsumersChart(drinkers, consumed);
+      });
+
       beerService.getBestSellingLocations(this.beerName).subscribe(
         data => {
           console.log(data);
@@ -51,6 +69,7 @@ export class BeerDetailsComponent implements OnInit {
         sold = sold.splice(0,10);
         this.renderBestSellingLocationsChart(bars, sold);
       });
+
     }
   );
   }
@@ -96,6 +115,48 @@ export class BeerDetailsComponent implements OnInit {
       },
       series: [{
         data: sold
+      }]
+    });
+  }
+
+  renderTopConsumersChart(drinkers: string[], consumed: number[]) {
+    Highcharts.chart('TopConsumersGraph', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Top Consumers of this Beer'
+      },
+      xAxis: {
+        categories: drinkers,
+        title: {
+          text: 'Drinkers'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Number of Beers Sold at Each Bar'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: consumed
       }]
     });
   }
