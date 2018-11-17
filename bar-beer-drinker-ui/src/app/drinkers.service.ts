@@ -8,6 +8,13 @@ export interface Drinker {
   state: string;
   addr: string;
 }
+export interface DrinkerTransactions {
+  bar: string;
+  transactionID: string;
+  time: string;
+  total: number;
+  tip: number;
+}
 @Injectable({
   providedIn: 'root'
 })
@@ -23,5 +30,8 @@ export class DrinkersService {
 
   getDrinker(drinker: string) {
     return this.http.get<Drinker>('api/drinkers/' + drinker);
+  }
+  getDrinkerTransactions(drinker: string) {
+    return this.http.get<DrinkerTransactions[]>('api/drinker_transactions/' + drinker);
   }
 }

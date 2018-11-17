@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DrinkersService, Drinker} from '../drinkers.service';
+import { DrinkersService, Drinker, DrinkerTransactions} from '../drinkers.service';
 import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-drinker-details',
@@ -11,14 +11,13 @@ export class DrinkerDetailsComponent implements OnInit {
 
   drinkerName: string;
   drinkerDetails: Drinker;
+  drinkerTransactions: DrinkerTransactions[]
   constructor(
     private drinkersService: DrinkersService,
     private route: ActivatedRoute
   ) {
     route.paramMap.subscribe((paramMap) => {
       this.drinkerName = paramMap.get('drinkers');
-      console.log(paramMap);
-      console.log(this.drinkerName);
       drinkersService.getDrinker(this.drinkerName).subscribe(
         data => {
           this.drinkerDetails = data;
@@ -33,6 +32,20 @@ export class DrinkerDetailsComponent implements OnInit {
         }
       );
 
+      drinkersService.getDrinkerTransactions(this.drinkerName).subscribe(
+        data => {
+            this.drinkerTransactions = data;
+        },
+        (error: HttpResponse<any>) => {
+          if (error.status === 404) {
+            alert('Drinker not found');
+          } else {
+            console.error(error.status + ' - ' + error.body);
+            alert('An error occurred on the server. Please check the browser console')
+          }
+        }
+      );
+      console.log(this.drinkerTransactions);
       // barService.getMenu(this.barName).subscribe(
       //   data => {
       //     this.menu = data;

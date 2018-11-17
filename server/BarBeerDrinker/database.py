@@ -81,7 +81,17 @@ def find_drinker(name):
             return None
         result = dict(result)
         return result
-
+def get_drinker_transactions(name):
+        with engine.connect() as con:
+            query = sql.text("select t.bar as bar,t.transactionID as transactionID,t.time as time,t.total as total,t.tip as tip from transactions t left join makes m on t.bar = m.bar and t.transactionID = m.transactionID where m.drinker = :name order by bar,time;")
+            rs = con.execute(query, name=name)
+            results = [dict(row) for row in rs]
+            for r in results:
+                r['time'] = str(r['time'])
+                r['tip'] = float(r['tip'])
+                r['tip'] = float('%.3f'%(r['tip']))
+                r['total'] = float('%.3f'%(r['total']))
+            return results
 
 def filter_beers(max_price):
     with engine.connect() as con:
