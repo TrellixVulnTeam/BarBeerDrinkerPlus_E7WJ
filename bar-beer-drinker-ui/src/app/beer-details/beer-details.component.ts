@@ -17,7 +17,7 @@ export class BeerDetailsComponent implements OnInit {
     private beerService: BeerService,
     private route: ActivatedRoute
   ) {
-    route.paramMap.subscribe((paramMap) => {
+    this.route.paramMap.subscribe((paramMap) => {
       this.beerName = paramMap.get('beer');
       beerService.getBeer(this.beerName).subscribe(
         data => {
