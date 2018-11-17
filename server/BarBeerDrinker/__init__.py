@@ -63,6 +63,20 @@ def get_drinker_transactions(name):
     except Exception as e:
         return make_response(str(e), 500)
 
+@app.route('/api/drinker_most_beers/<name>', methods=["GET"])
+def get_drinker_most_beers(name):
+    try:
+        if name is None:
+            raise ValueError("Drinker is not specified.")
+        drinker = database.get_drinker_most_beers(name)
+        if drinker is None:
+            return make_response("No drinker found with the given name.", 404)
+        return jsonify(drinker)
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
+
 @app.route('/api/beers_cheaper_than', methods=["POST"])
 def find_beers_cheaper_than():
     body = json.loads(request.data)

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DrinkersService, Drinker, DrinkerTransactions} from '../drinkers.service';
+import { DrinkersService, Drinker, DrinkerTransactions,Items} from '../drinkers.service';
 import { HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-drinker-details',
@@ -12,10 +12,13 @@ export class DrinkerDetailsComponent implements OnInit {
   drinkerName: string;
   drinkerDetails: Drinker;
   drinkerTransactions: DrinkerTransactions[]
+  drinkerMostBeers: any[]
+  items: Items[]
   constructor(
     private drinkersService: DrinkersService,
     private route: ActivatedRoute
   ) {
+
     route.paramMap.subscribe((paramMap) => {
       this.drinkerName = paramMap.get('drinkers');
       drinkersService.getDrinker(this.drinkerName).subscribe(
@@ -45,12 +48,25 @@ export class DrinkerDetailsComponent implements OnInit {
           }
         }
       );
-      console.log(this.drinkerTransactions);
-      // barService.getMenu(this.barName).subscribe(
-      //   data => {
-      //     this.menu = data;
-      //   }
-      // );
+      drinkersService.getDrinkerMostBeers(this.drinkerName).subscribe(
+        data => {
+          var beers = [];
+          var quantity = [];
+          this.drinkerMostBeers = data;
+          data.sort((a, b) => a.quantity < b.quantity ? 1 : a.quantity > b.quantity ? -1 : 0)
+          console.log(data);
+          data.forEach(beer => {
+                beers.push(beer.beer);
+                quantity.push(beer.quantity);
+              }
+          );
+          console.log(beers);
+          console.log(quantity);
+          beers = beers.splice(0,10);
+          quantity = quantity.splice(0,10);
+          this.renderMostBeersChart(beers,quantity);
+        }
+      );
 
       // barService.getPopularBeers(this.barName).subscribe(
       //   data => {
@@ -109,5 +125,45 @@ export class DrinkerDetailsComponent implements OnInit {
 
   ngOnInit() {
   }
-
+  renderMostBeersChart(beers: string[], quantity: number[]) {
+    Highcharts.chart('mostBeersChart', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Beers Ordered Most'
+      },
+      xAxis: {
+        categories: beers,
+        title: {
+          text: 'Beers'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Beers Bought'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: quantity
+      }]
+    });
+  }
 }
