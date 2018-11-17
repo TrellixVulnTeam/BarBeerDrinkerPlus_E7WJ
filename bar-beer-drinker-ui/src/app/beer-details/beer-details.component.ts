@@ -10,8 +10,8 @@ import { HttpResponse } from '@angular/common/http';
 })
 export class BeerDetailsComponent implements OnInit {
 
-  beerName: string
-  beerDetails: Beer
+  beerName: string;
+  beerDetails: Beer;
 
   constructor(
     private beerService: BeerService,
@@ -28,7 +28,7 @@ export class BeerDetailsComponent implements OnInit {
             alert('Beer not found');
           } else {
             console.error(error.status + ' - ' + error.body);
-            alert('An error occurred on the server. Please check the browser console')
+            alert('An error occurred on the server. Please check the browser consolemmmmmmm')
           }
         }
       );

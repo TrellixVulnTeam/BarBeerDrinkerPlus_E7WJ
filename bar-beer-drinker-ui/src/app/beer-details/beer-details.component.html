@@ -1,3 +1,8 @@
-<p>
-  beer-details works!
-</p>
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">{{ beerName }}</h1>
+    <p class="beer-details" *ngIf="beerDetails">
+      {{ beerDetails.Manufacturer }}
+    </p>
+    </div>
+  </div>
