@@ -138,7 +138,7 @@ def get__sells_most_beers(bar_name):
             r['BeersSold'] = int(r['BeersSold'])
         return results
 
-def get__best_sold_in_bars(beer_name):
+def get__best_selling_locations(beer_name):
     with engine.connect() as con:
         query = sql.text("select t.bar as Bar, c.quantity as, BeersSold from transactions t left join contains c on t.bar = c.bar and t.transactionID = c.transactionID where c.item =:beer;")
         rs = con.execute(query, beer=beer_name)
