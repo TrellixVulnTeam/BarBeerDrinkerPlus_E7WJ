@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DrinkersService, Drinker, DrinkerTransactions,Items} from '../drinkers.service';
+import { DrinkersService, Drinker, DrinkerTransactions} from '../drinkers.service';
 import { HttpResponse } from '@angular/common/http';
+
+declare const Highcharts: any;
+
 @Component({
   selector: 'app-drinker-details',
   templateUrl: './drinker-details.component.html',
@@ -13,7 +16,6 @@ export class DrinkerDetailsComponent implements OnInit {
   drinkerDetails: Drinker;
   drinkerTransactions: DrinkerTransactions[]
   drinkerMostBeers: any[]
-  items: Items[]
   constructor(
     private drinkersService: DrinkersService,
     private route: ActivatedRoute
