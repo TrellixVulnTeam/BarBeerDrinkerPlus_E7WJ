@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { BeerService, Beer } from '../beer.service';
 import { HttpResponse } from '@angular/common/http';
 
+
 declare const Highcharts: any;
 
 @Component({
@@ -19,7 +20,7 @@ export class BeerDetailsComponent implements OnInit {
     private beerService: BeerService,
     private route: ActivatedRoute
   ) {
-    this.route.paramMap.subscribe((paramMap) => {
+    route.paramMap.subscribe((paramMap) => {
       this.beerName = paramMap.get('beer');
       beerService.getBeer(this.beerName).subscribe(
         data => {
@@ -40,15 +41,15 @@ export class BeerDetailsComponent implements OnInit {
           console.log(data);
           var bars = [];
           var sold = [];
-          data.sort((a, b) => a.BeersSold < b.BeersSold ? 1 : a.BeersSold > b.BeersSold ? -1 : 0)
+          data.sort((a, b) => a.NumberSold < b.NumberSold ? 1 : a.NumberSold > b.NumberSold ? -1 : 0)
           data.forEach(bar => {
-            sold.push(bar.BeersSold);
+            sold.push(bar.NumberSold);
             bars.push(bar.Bar);
           }
         );
         bars = bars.splice(0,10);
         sold = sold.splice(0,10);
-        this.renderBeerChart(sold, bars);
+        this.renderBestSellingLocationsChart(bars, sold);
       });
     }
   );
@@ -57,24 +58,24 @@ export class BeerDetailsComponent implements OnInit {
   ngOnInit() {
   }
 
-  renderBestSellingBeersChart(drinkers: string[], spending: number[]) {
-    Highcharts.chart('barSpendersGraph', {
+  renderBestSellingLocationsChart(bars: string[], sold: number[]) {
+    Highcharts.chart('BestSellingLocationsGraph', {
       chart: {
         type: 'column'
       },
       title: {
-        text: 'Largest Spenders'
+        text: 'Best Selling Locations For This Beer'
       },
       xAxis: {
-        categories: drinkers,
+        categories: bars,
         title: {
-          text: 'Drinkers'
+          text: 'Bars'
         }
       },
       yAxis: {
         min: 0,
         title: {
-          text: 'Amount drinker spends at this bar'
+          text: 'Number of Beers Sold at Each Bar'
         },
         labels: {
           overflow: 'justify'
@@ -94,7 +95,7 @@ export class BeerDetailsComponent implements OnInit {
         enabled: false
       },
       series: [{
-        data: spending
+        data: sold
       }]
     });
   }

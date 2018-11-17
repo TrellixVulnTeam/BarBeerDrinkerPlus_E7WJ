@@ -24,7 +24,7 @@ export class BeerService {
   }
 
   getBestSellingLocations(beer: string) {
-    return this.http.get<Beer>('api/best-selling-locations/' + beer);
+    return this.http.get<any[]>('api/best-selling-locations/' + beer);
   }
 
 }
