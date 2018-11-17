@@ -61,6 +61,7 @@ def get_drinkers():
 def find_bar(name):
     with engine.connect() as con:
         query = sql.text("SELECT name, city, state, weekdayOpen, weekdayClose, weekendOpen, weekendClose FROM bars WHERE name = :name;")
+
         rs = con.execute(query, name=name)
         result = rs.first()
         if result is None:
@@ -81,6 +82,23 @@ def find_drinker(name):
             return None
         result = dict(result)
         return result
+
+def get_drinker_most_beers(name):
+        with engine.connect() as con:
+            query = sql.text("select c.item as beer, sum(c.quantity) as quantity from contains c,(select t.bar,t.transactionID from transactions t left join makes m on t.bar = m.bar and t.transactionID = m.transactionID where m.drinker = :name) s where s.transactionID = c.transactionID and s.bar = c.bar group by beer;");
+            rs = con.execute("SELECT name,itemType FROM items")
+            items = [dict(row) for row in rs]
+            rs = con.execute(query, name=name)
+            results = [dict(row) for row in rs]
+            results2 = [];
+            for r in results:
+                r['quantity'] = float(r['quantity'])
+                for i in items:
+                    if(i['name']  == r['beer']):
+                        if(i['itemType'] == "Beer"):
+                            results2.append(r);
+            
+            return results2
 def get_drinker_transactions(name):
         with engine.connect() as con:
             query = sql.text("select t.bar as bar,t.transactionID as transactionID,t.time as time,t.total as total,t.tip as tip from transactions t left join makes m on t.bar = m.bar and t.transactionID = m.transactionID where m.drinker = :name order by bar,time;")
