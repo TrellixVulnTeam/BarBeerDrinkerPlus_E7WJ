@@ -9,6 +9,8 @@ import {  Beer, BeerService  } from '../beer.service';
 })
 export class BeerComponentComponent implements OnInit {
 
+  beers: Beer[]
+
   constructor(
     public beerService: BeerService
   ) { }
@@ -20,7 +22,7 @@ export class BeerComponentComponent implements OnInit {
   getBeers(){
     this.beerService.getBeers().subscribe(
       data => {
-        this.bars = data;
+        this.beers = data;
       },
       error => {
         alert('Could not retrieve a list of beers');
