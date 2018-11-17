@@ -7,7 +7,31 @@
     </p>
   </div>
 </div>
+<div class ="container">
 
+  <p-table [value]="drinkerTransactions">
+    <ng-template pTemplate="header">
+      <tr>
+        <th scope="col">Bar</th>
+        <th scope="col">Transaction ID</th>
+        <th scope="col">Time</th>
+        <th scope="col">Total</th>
+        <th scope="col">Tip</th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-drinker_transaction>
+      <tr>
+        <td>
+            {{ drinker_transaction.bar }}
+        </td>
+        <td>{{ drinker_transaction.transactionID  }}</td>
+        <td>{{ drinker_transaction.time }}</td>
+        <td>{{ drinker_transaction.total }}</td>
+        <td>{{ drinker_transaction.tip }}</td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
 <!-- <div class="container">
   <h2 class="text-center font-weight-light">Menu</h2>
   <br>
@@ -50,3 +74,4 @@
  <div id="ManufacturersGraph"></div>
  <br><br>
 </div> -->
+<br><br>
