@@ -7,13 +7,13 @@ import { HttpResponse } from '@angular/common/http';
   selector: 'app-modification',
   templateUrl: './modification.component.html',
   styleUrls: ['./modification.component.css'],
-  template: `
-  <br><br><br><br>
-  <input #query
-      (keyup.enter)="onClickMe(newHero.value)"
-      (blur)="onClickMe(query.value); query.value=null">
-    <button (click)="OnClickMe(query.value)">Submit Query</button>
-    {{ clickMessage }}`
+  //template: `
+  // <br><br><br><br>
+  // <input #query
+  //     (keyup.enter)="onClickMe(newHero.value)"
+  //     (blur)="onClickMe(query.value); query.value=null">
+  //   <button (click)="OnClickMe(query.value)">Submit Query</button>
+  //   {{ clickMessage }}`
 })
 export class ModificationComponent implements OnInit {
 

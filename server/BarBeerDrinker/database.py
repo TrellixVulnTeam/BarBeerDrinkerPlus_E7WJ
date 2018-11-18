@@ -216,8 +216,9 @@ def modification_query(query):
         try:
             rs = con.execute(query)
             result["first"] = "Table has been updated"
-        except Exception:
-            result["first"] = "there was an error"
+            return result
+        except Exception as e:
+            result["first"] = str(e)
             return result
         except ValueError as e:
             return result
