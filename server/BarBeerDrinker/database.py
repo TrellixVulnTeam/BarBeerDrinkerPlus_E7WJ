@@ -222,3 +222,19 @@ def modification_query(query):
             return result
         except ValueError as e:
             return result
+
+def verify_assertion(query):
+    with engine.connect() as con:
+        result = {"first": "True: Assertion is held."}
+        try:
+            rs = con.execute(query)
+            for r in rs:
+                if(r['verify'] == 0):
+                    result["first"] = "FALSE: Assertion not held"
+                    break
+            return result
+        except Exception as e:
+            result["first"] = str(e)
+            return result
+        except ValueError as e:
+            return result

@@ -89,6 +89,11 @@ def modification_query(query):
         result = database.modification_query(query)
         return jsonify(dict(result))
 
+@app.route('/api/verify-assertion/<query>', methods=["GET"])
+def verify_assertion(query):
+        result = database.verify_assertion(query)
+        return jsonify(dict(result))
+
 
 @app.route('/api/menu/<name>', methods=['GET'])
 def get_menu(name):
@@ -181,6 +186,7 @@ def beers_time_distribution(name):
         return make_response(str(e), 400)
     except Exception as e:
         return make_response(str(e), 500)
+
 @app.route('/api/bar_time_distribution_day/<name>', methods=["GET"])
 def bar_time_distribution_day(name):
     try:
@@ -194,7 +200,7 @@ def bar_time_distribution_day(name):
         return make_response(str(e), 400)
     except Exception as e:
         return make_response(str(e), 500)
-        
+
 @app.route('/api/bar_time_distribution_week/<name>', methods=["GET"])
 def bar_time_distribution_week(name):
     try:

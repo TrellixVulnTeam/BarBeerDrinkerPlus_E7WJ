@@ -18,5 +18,9 @@ export class ModificationService {
       return this.http.get<Result>('/api/send-query/' + query);
     }
 
+    verifyAssertion(query: string){
+        return this.http.get<Result>('/api/verify-assertion/' + query);
+      }
+
 
   }

@@ -11,7 +11,7 @@
 <br><br><br><br>
 
 <input #query
-(keyup.enter)="onClickMe(newHero.value)"
+(keyup.enter)="onClickMe(query.value)"
 (blur)="onClickMe(query.value); query.value=null" id="txtbox">
 <button (click)="OnClickMe(query.value)" id = "button">Submit Query</button>
 <p id = "Message">{{ clickMessage }}</p>

@@ -1,0 +1,35 @@
+<div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <h1 class="display-4">Welcome to the Verification Page</h1>
+    Please click on the buttons below to verify the different patterns in our database.
+    <p class="modify" *ngIf="modify">
+        </p>
+  </div>
+</div>
+
+<div class = "body1" id = "content1">
+<p id = "pat1"> Query for Pattern #1: {{ query1 }}</p>
+<br><br>
+<button (click)="OnClickMe1()" id = "button1">Verify Pattern #1</button>
+<br><br>
+<p id = "Message1">{{ clickMessage1 }}</p>
+<br><br>
+</div>
+
+<div class = "body2" id = "content2">
+<p id = "pat2"> Query for Pattern #2: {{ query2 }}</p>
+<br><br>
+<button (click)="OnClickMe2()" id = "button2">Verify Pattern #2</button>
+<br><br>
+<p id = "Message2">{{ clickMessage2 }}</p>
+<br><br>
+</div>
+
+<div class = "body3" id = "content3">
+<p id = "pat3"> Query for Pattern #3: {{ query3 }}</p>
+<br><br>
+<button (click)="OnClickMe3()" id = "button3">Verify Pattern #3</button>
+<br><br>
+<p id = "Message3">{{ clickMessage3 }}</p>
+<br><br>
+</div>

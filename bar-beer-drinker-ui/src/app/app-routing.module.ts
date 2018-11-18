@@ -8,6 +8,7 @@ import { InsightComponent } from './insight/insight.component';
 import { BeerComponentComponent } from './beer-component/beer-component.component';
 import { BeerDetailsComponent } from './beer-details/beer-details.component'
 import { ModificationComponent } from './modification/modification.component';
+import { VerificationComponent } from './verification/verification.component';
 
 const routes: Routes = [
   {
@@ -54,7 +55,13 @@ const routes: Routes = [
     path: 'modification',
     pathMatch: 'full',
     component: ModificationComponent
+  },
+  {
+    path: 'verification',
+    pathMatch: 'full',
+    component: VerificationComponent
   }
+
 ];
 
 @NgModule({

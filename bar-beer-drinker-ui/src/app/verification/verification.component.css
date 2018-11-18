@@ -1,0 +1,58 @@
+#content1{
+  margin: auto;
+  width: 50%;
+}
+
+#content2{
+  margin: auto;
+  width: 50%;
+}
+
+#content3{
+  margin: auto;
+  width: 50%;
+}
+
+#Message1{
+  position: relative;
+  left: 10px;
+  color: blue;
+  font-size: 20pt;
+}
+
+#Message2{
+  position: relative;
+  left: 10px;
+  color: blue;
+  font-size: 20pt;
+}
+
+#Message3{
+  position: relative;
+  left: 10px;
+  color: blue;
+  font-size: 20pt;
+}
+
+#pat1{
+  color: black;
+  font-size: 16pt;
+}
+#pat2{
+  color: black;
+  font-size: 16pt;
+}
+#pat3{
+  color: black;
+  font-size: 16pt;
+}
+
+button{
+  position: relative;
+  left: 50px;
+  font-size: 24px;
+  border-radius: 12px;
+  border-color: blue;
+  background-color: blue; color: white;
+  box-shadow: 0 10px 10px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+}
