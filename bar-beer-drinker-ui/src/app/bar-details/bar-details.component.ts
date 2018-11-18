@@ -44,7 +44,6 @@ export class BarDetailsComponent implements OnInit {
 
       barService.getPopularBeers(this.barName).subscribe(
         data => {
-          console.log(data);
           var beers = [];
           var sold = [];
           data.sort((a, b) => a.Amountsold < b.AmountSold ? 1 : a.AmountSold > b.AmountSold ? -1 : 0)
@@ -60,7 +59,6 @@ export class BarDetailsComponent implements OnInit {
 
       barService.getLargestSpenders(this.barName).subscribe(
         data => {
-          console.log(data);
           var drinkers = [];
           var spending = [];
           data.sort((a, b) => a.spendingAmount < b.spendingAmount ? 1 : a.spendingAmount > b.spendingAmount ? -1 : 0)
@@ -77,7 +75,6 @@ export class BarDetailsComponent implements OnInit {
 
     barService.getManufacturerSells(this.barName).subscribe(
       data => {
-        console.log(data);
         var manufacturers = [];
         var beerSold = [];
         data.sort((a, b) => a.BeersSold < b.BeersSold ? 1 : a.BeersSold > b.BeersSold ? -1 : 0)
@@ -91,14 +88,120 @@ export class BarDetailsComponent implements OnInit {
     beerSold = beerSold.splice(0,5);
     this.renderManuChart(manufacturers, beerSold);
   });
+  barService.getBarTimeDistributionDay(this.barName).subscribe(
+    data => {
+      console.log(data);
+      var time = [];
+      var orders = [];
+      data.forEach(bar => {
+        time.push(bar.hour);
+        orders.push(bar.avgT);
+      }
+  );
+  console.log(time)
+  console.log(orders);
+  this.renderBarDistributionDay(time, orders);
+});
+barService.getBarTimeDistributionWeek(this.barName).subscribe(
+  data => {
+    console.log(data);
+    var time = ['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday'];
+    var orders = [];
+    data.forEach(bar => {
+      orders.push(bar.avgT);
+    }
+);
 
+this.renderBarDistributionWeek(time, orders);
+});
  }
 );
 }
 
   ngOnInit() {
   }
-
+  renderBarDistributionWeek(time: string[], orders: number[]) {
+    Highcharts.chart('BarDistributionWeekGraph', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Busiest Times of the Week'
+      },
+      xAxis: {
+        categories: time,
+        title: {
+          text: 'Day Of the Week'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Orders'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: orders
+      }]
+    });
+  }
+  renderBarDistributionDay(time: string[], orders: number[]) {
+    Highcharts.chart('BarDistributionDayGraph', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Busiest Times of the Day'
+      },
+      xAxis: {
+        categories: time,
+        title: {
+          text: 'Time'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Orders'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: orders
+      }]
+    });
+  }
 renderChart(drinkers: string[], spending: number[]) {
   Highcharts.chart('barSpendersGraph', {
     chart: {
