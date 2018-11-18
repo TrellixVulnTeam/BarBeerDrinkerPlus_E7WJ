@@ -80,8 +80,14 @@ def get_drinker_most_beers(name):
 @app.route('/api/beers_cheaper_than', methods=["POST"])
 def find_beers_cheaper_than():
     body = json.loads(request.data)
-    max_price = body['maxPrice']
+    max_price = body['query']
     return jsonify(database.filter_beers(max_price))
+
+
+@app.route('/api/send-query/<query>', methods=["GET"])
+def modification_query(query):
+        result = database.modification_query(query)
+        return jsonify(dict(result))
 
 
 @app.route('/api/menu/<name>', methods=['GET'])

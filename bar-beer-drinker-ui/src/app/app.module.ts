@@ -3,7 +3,6 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
 
 import { TableModule } from 'primeng/table';
-
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { WelcomeComponent } from './welcome/welcome.component';
@@ -13,6 +12,7 @@ import { InsightComponent } from './insight/insight.component';
 import { BeerDetailsComponent } from './beer-details/beer-details.component';
 import { BeerComponentComponent } from './beer-component/beer-component.component';
 import { DrinkerDetailsComponent } from './drinker-details/drinker-details.component';
+import { ModificationComponent } from './modification/modification.component';
 
 @NgModule({
   declarations: [
@@ -23,13 +23,14 @@ import { DrinkerDetailsComponent } from './drinker-details/drinker-details.compo
     InsightComponent,
     BeerDetailsComponent,
     BeerComponentComponent,
-    DrinkerDetailsComponent
+    DrinkerDetailsComponent,
+    ModificationComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     TableModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]

@@ -97,7 +97,7 @@ def get_drinker_most_beers(name):
                     if(i['name']  == r['beer']):
                         if(i['itemType'] == "Beer"):
                             results2.append(r);
-            
+
             return results2
 def get_drinker_transactions(name):
         with engine.connect() as con:
@@ -183,3 +183,15 @@ def get__top_consumers(beer_name):
         for r in results:
             r['AmountConsumed'] = int(r['AmountConsumed'])
         return results
+
+def modification_query(query):
+    with engine.connect() as con:
+        result = {"first": "error"}
+        try:
+            rs = con.execute(query)
+            result["first"] = "Table has been updated"
+        except Exception:
+            result["first"] = "there was an error"
+            return result
+        except ValueError as e:
+            return result
