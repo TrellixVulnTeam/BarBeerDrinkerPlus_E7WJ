@@ -30,5 +30,8 @@ export class BeerService {
   getTopConsumers(beer: string) {
     return this.http.get<any[]>('api/top_consumers/' + beer);
   }
+  getBeerTimeDistribution(beer: string) {
+    return this.http.get<any[]>('api/beers_time_distribution/' + beer);
+  }
 
 }

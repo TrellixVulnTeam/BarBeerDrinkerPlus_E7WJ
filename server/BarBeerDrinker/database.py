@@ -122,7 +122,33 @@ def filter_beers(max_price):
         r['price'] = float(r['price'])
     return results
 
-
+def beers_time_distribution(name):
+        with engine.connect() as con:
+            query = sql.text("select avg(transactionsPerHour) as avgT,hour(time) as hour from (select c.item,c.quantity,t.bar,count(t.transactionID) as transactionsPerHour,t.time from transactions t left join contains c on t.bar = c.bar and t.transactionID = c.transactionID where c.item = :name group by hour(time),time) t group by hour(time) ;")
+            rs = con.execute(query, name=name)
+            results = [dict(row) for row in rs]
+            for r in results:
+                r['avgT'] = float(r['avgT'])
+                r['hour'] = int(r['hour'])
+            return results
+def bar_time_distribution_day(name):
+        with engine.connect() as con:
+            query = sql.text("select avg(transactionsPerHour) as avgT,hour(time) as hour from(select count(*) as transactionsPerHour,time from transactions where bar = :name group by hour(time),time)t group by hour(time) order by hour(time);");
+            rs = con.execute(query, name=name)
+            results = [dict(row) for row in rs]
+            for r in results:
+                r['avgT'] = float(r['avgT'])
+                r['hour'] = int(r['hour'])
+            return results
+def bar_time_distribution_week(name):
+        with engine.connect() as con:
+            query = sql.text("select avg(transactionsPerHour) as avgT,dayofweek(time) as hour from(select count(*) as transactionsPerHour,time from transactions where bar = :name group by hour(time),time)t group by dayofweek(time) order by dayofweek(time);");
+            rs = con.execute(query, name=name)
+            results = [dict(row) for row in rs]
+            for r in results:
+                r['avgT'] = float(r['avgT'])
+                r['hour'] = int(r['hour'])
+            return results
 def get_bar_menu(bar_name):
     with engine.connect() as con:
         query = sql.text('SELECT DISTINCT a.bar, a.item, a.price, b.manufacturer, b.itemType FROM sells as a JOIN items AS b ON a.item = b.name WHERE a.bar = :bar;')

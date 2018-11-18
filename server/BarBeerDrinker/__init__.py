@@ -168,7 +168,46 @@ def find_beer(name):
     except Exception as e:
         return make_response(str(e), 500)
 
-
+@app.route('/api/beers_time_distribution/<name>', methods=["GET"])
+def beers_time_distribution(name):
+    try:
+        if name is None:
+            raise ValueError("Beer is not specified.")
+        beer = database.beers_time_distribution(name)
+        if beer is None:
+            return make_response("No beer found with the given name.", 404)
+        return jsonify(beer)
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
+@app.route('/api/bar_time_distribution_day/<name>', methods=["GET"])
+def bar_time_distribution_day(name):
+    try:
+        if name is None:
+            raise ValueError("Beer is not specified.")
+        beer = database.bar_time_distribution_day(name)
+        if beer is None:
+            return make_response("No beer found with the given name.", 404)
+        return jsonify(beer)
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
+        
+@app.route('/api/bar_time_distribution_week/<name>', methods=["GET"])
+def bar_time_distribution_week(name):
+    try:
+        if name is None:
+            raise ValueError("Beer is not specified.")
+        beer = database.bar_time_distribution_week(name)
+        if beer is None:
+            return make_response("No beer found with the given name.", 404)
+        return jsonify(beer)
+    except ValueError as e:
+        return make_response(str(e), 400)
+    except Exception as e:
+        return make_response(str(e), 500)
 @app.route('/api/beer', methods=["GET"])
 def get_beers():
     return jsonify(database.get_beers())

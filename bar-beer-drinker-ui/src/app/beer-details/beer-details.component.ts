@@ -40,7 +40,6 @@ export class BeerDetailsComponent implements OnInit {
 
       beerService.getTopConsumers(this.beerName).subscribe(
         data => {
-          console.log(data);
           var drinkers = [];
           var consumed = [];
           data.sort((a, b) => a.AmountConsumed < b.AmountConsumed ? 1 : a.AmountConsumed > b.AmountConsumed ? -1 : 0)
@@ -56,7 +55,6 @@ export class BeerDetailsComponent implements OnInit {
 
       beerService.getBestSellingLocations(this.beerName).subscribe(
         data => {
-          console.log(data);
           var bars = [];
           var sold = [];
           data.sort((a, b) => a.NumberSold < b.NumberSold ? 1 : a.NumberSold > b.NumberSold ? -1 : 0)
@@ -70,6 +68,18 @@ export class BeerDetailsComponent implements OnInit {
         this.renderBestSellingLocationsChart(bars, sold);
       });
 
+      beerService.getBeerTimeDistribution(this.beerName).subscribe(
+        data => {
+          console.log(data);
+          var quantity = [];
+          var time = [];
+          data.forEach(beer => {
+            time.push(beer.hour);
+            quantity.push(beer.avgT);
+          }
+        );
+          this.renderBeerDistribution(quantity,time);
+      });
     }
   );
   }
@@ -115,6 +125,47 @@ export class BeerDetailsComponent implements OnInit {
       },
       series: [{
         data: sold
+      }]
+    });
+  }
+  renderBeerDistribution(time: string[], quantity: number[]) {
+    Highcharts.chart('BeerDistributionGraph', {
+      chart: {
+        type: 'line'
+      },
+      title: {
+        text: 'Time when this beer sells the most'
+      },
+      xAxis: {
+        categories: quantity,
+        title: {
+          text: 'Time'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Quantity'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: time
       }]
     });
   }

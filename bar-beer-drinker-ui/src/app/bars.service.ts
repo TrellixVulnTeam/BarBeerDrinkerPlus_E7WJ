@@ -52,5 +52,10 @@ export class BarsService {
  getManufacturerSells(bar: string){
    return this.http.get<any[]>('/api/manufacturer-sells/' + bar);
  }
-
+ getBarTimeDistributionDay(bar: string){
+   return this.http.get<any[]>('/api/bar_time_distribution_day/' + bar);
+ }
+ getBarTimeDistributionWeek(bar: string){
+   return this.http.get<any[]>('/api/bar_time_distribution_week/' + bar);
+ }
 }
