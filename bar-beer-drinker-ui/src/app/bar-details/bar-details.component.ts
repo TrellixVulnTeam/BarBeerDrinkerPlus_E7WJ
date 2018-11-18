@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { BarsService, Bar, BarMenuItem } from '../bars.service';
 import { HttpResponse } from '@angular/common/http';
+//import { Transaction } from '../transaction.model';
 
 declare const Highcharts: any;
 
@@ -15,12 +16,15 @@ export class BarDetailsComponent implements OnInit {
   barName: string;
   barDetails: Bar;
   menu: BarMenuItem[];
+  // Tdrinker: string;
+  // Ttime: string;
+  // Titems: string;
+  // Tquantities: string;
 
   constructor(
     private barService: BarsService,
-    private route: ActivatedRoute
-  ) {
-    
+    private route: ActivatedRoute) {
+
     route.paramMap.subscribe((paramMap) => {
       this.barName = paramMap.get('bar');
       barService.getBar(this.barName).subscribe(
@@ -121,6 +125,7 @@ this.renderBarDistributionWeek(time, orders);
 
   ngOnInit() {
   }
+
   renderBarDistributionWeek(time: string[], orders: number[]) {
     Highcharts.chart('BarDistributionWeekGraph', {
       chart: {

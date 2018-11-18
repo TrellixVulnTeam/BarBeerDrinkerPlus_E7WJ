@@ -1,3 +1,4 @@
+
 <div class="jumbotron jumbotron-fluid">
   <div class="container">
     <h1 class="display-4">{{ barName }}</h1>
@@ -64,3 +65,61 @@
  <div id="BarDistributionWeekGraph"></div>
  <br><br>
 </div>
+
+
+<!--
+<div class="containers">
+    <h1>Transaction Form</h1>
+    <form (ngSubmit)="onSubmit()" #TransactionForm="ngForm">
+      <label for="Tname">Name</label>
+<input type="text" class="form-control" id="Tname"
+       required
+       [(ngModel)]="model.Tname" name="Tname"
+       #Tname="ngModel">
+<div [hidden]="Tname.valid || Tname.pristine"
+     class="alert alert-danger">
+  Name is required
+</div>
+<br> <br>
+      <div class="form-group">
+        <label for="Date Time">Date Time (Please enter in the format day:Month:year:HH:MM:SS)</label>
+        <<input type="text" class="form-control" id="Ttime"
+               required
+               [(ngModel)]="model.Ttime" name="Ttime"
+               #Ttiem="ngModel">
+        <div [hidden]="Ttime.valid || Ttime.pristine"
+             class="alert alert-danger">
+          Time is required
+        </div>
+      </div>
+
+<br> <br>
+
+      <div class="form-group">
+        <label for="items">Items (If more than one item enter in format (Ex. item1,item2,item3...) Refer to the menu above for exact spelling and capitalization</label>
+        <<input type="text" class="form-control" id="Titem"
+               required
+               [(ngModel)]="model.Titem" name="Titem"
+               #Titem="ngModel">
+        <div [hidden]="Titem.valid || Titem.pristine"
+             class="alert alert-danger">
+          Item is required
+        </div>
+      </div>
+<br> <br>
+      <div class="form-group">
+        <label for="Quantities">Quantites(Follow format and order for preview items entry (Ex. quantity1,quantity2,quantity3...)</label>
+        <input type="text" class="form-control" id="Tquantities"
+               required
+               [(ngModel)]="model.Tquantities" name="Tquantities"
+               #Tquantities="ngModel">
+        <div [hidden]="Tquantities.valid || Tquantities.pristine"
+             class="alert alert-danger">
+          Quantity is required
+        </div>
+      </div>
+<br> <br>
+      <button type="submit" class="btn btn-success" (click) = "onSubmit(); TransactionForm.reset()">Submit</button>
+      <br><br><br>
+    </form>
+</div> -->

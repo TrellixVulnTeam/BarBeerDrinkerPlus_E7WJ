@@ -247,3 +247,7 @@ def get__top_consumers(name):
         return make_response(str(e), 400)
     except Exception as e:
         return make_response(str(e), 500)
+
+@app.route('/api/send-transaction', methods=['POST'])
+def send_transaction():
+    body = josn.loads(request.data);

@@ -58,4 +58,5 @@ export class BarsService {
  getBarTimeDistributionWeek(bar: string){
    return this.http.get<any[]>('/api/bar_time_distribution_week/' + bar);
  }
+
 }

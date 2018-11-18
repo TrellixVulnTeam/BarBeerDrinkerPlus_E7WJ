@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { HttpClientModule, HttpClient } from '@angular/common/http';
+import { FormsModule }   from '@angular/forms';
 
 import { TableModule } from 'primeng/table';
 import { AppRoutingModule } from './app-routing.module';
@@ -33,6 +34,7 @@ import { VerificationComponent } from './verification/verification.component';
     AppRoutingModule,
     TableModule,
     HttpClientModule,
+    FormsModule,
   ],
   providers: [HttpClient],
   bootstrap: [AppComponent]
