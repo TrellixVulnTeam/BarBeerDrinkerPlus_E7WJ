@@ -20,6 +20,7 @@ export class BarDetailsComponent implements OnInit {
     private barService: BarsService,
     private route: ActivatedRoute
   ) {
+    
     route.paramMap.subscribe((paramMap) => {
       this.barName = paramMap.get('bar');
       barService.getBar(this.barName).subscribe(
