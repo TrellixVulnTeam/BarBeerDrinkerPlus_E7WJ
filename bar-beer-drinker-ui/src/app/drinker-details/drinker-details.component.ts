@@ -16,7 +16,7 @@ export class DrinkerDetailsComponent implements OnInit {
   drinkerDetails: Drinker;
   drinkerTransactions: DrinkerTransactions[]
   drinkerMostBeers: any[]
-  clickMessage: '';
+  clickMessage: string;
 
   constructor(
     private drinkersService: DrinkersService,
