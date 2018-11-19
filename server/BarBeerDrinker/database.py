@@ -110,7 +110,15 @@ def get_drinker_transactions(name):
                 r['tip'] = float('%.3f'%(r['tip']))
                 r['total'] = float('%.3f'%(r['total']))
             return results
-
+def get_drinker_time(drinker,start,end):
+    with engine.connect() as con:
+        query = sql.text("select t.time as time,t.total as total from transactions t left join makes m on t.bar = m.bar and t.transactionID = m.transactionID where m.drinker = :name and time between :start and :end order by bar,time");
+        rs = con.execute(query, name=name)
+        results = [dict(row) for row in rs]
+        for r in results:
+            r['time'] = str(r['time'])
+            r['total'] = float(r['tip'])
+            r['total'] = float('%.3f'%(r['total']))
 def filter_beers(max_price):
     with engine.connect() as con:
         query = sql.text(
