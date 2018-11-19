@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DrinkersService, Drinker, DrinkerTransactions} from '../drinkers.service';
+import { ModificationService, Result} from '../modification.service';
 import { HttpResponse } from '@angular/common/http';
 
 declare const Highcharts: any;
@@ -16,11 +17,15 @@ export class DrinkerDetailsComponent implements OnInit {
   drinkerDetails: Drinker;
   drinkerTransactions: DrinkerTransactions[]
   drinkerMostBeers: any[]
+  clickMessage: '';
+  result: Result;
+
   constructor(
     private drinkersService: DrinkersService,
+    private modService: ModificationService,
     private route: ActivatedRoute
   ) {
-    
+
     route.paramMap.subscribe((paramMap) => {
       this.drinkerName = paramMap.get('drinkers');
       drinkersService.getDrinker(this.drinkerName).subscribe(
@@ -124,9 +129,83 @@ export class DrinkerDetailsComponent implements OnInit {
 );
 }
 
+  OnClickMe(time1: string, time2: string)
+  {
+    if(time1 == '' || time2 =='')
+    {
+        this.clickMessage = 'Please enter a time interval';
+    }
+    else
+    {
+      this.clickMessage = '';
+      interval: string = time1.concat("|",time2);
+      var send: string = this.drinkerName.concat("|",interval);
+      this.drinkerService.getDrinkerTimeGraph(send).subscribe(
+        data =>{
+          var time[];
+          var spending[];
+          data.forEach(time => {
+            time.push(time.time);
+            spending.push(time.total);
+          }
+        );
+        this.renderDrinkerTimeChart(time,total);
+        }
+        )
+      }
+        }
+      )
+    }
+  }
+
+  generateTimeGraph();
+
 
   ngOnInit() {
   }
+
+  renderDrinkerTimeChart(time: string[], total: number[]) {
+    Highcharts.chart('mostBeersChart', {
+      chart: {
+        type: 'column'
+      },
+      title: {
+        text: 'Drinkers Spending Habits'
+      },
+      xAxis: {
+        categories: time,
+        title: {
+          text: 'Date'
+        }
+      },
+      yAxis: {
+        min: 0,
+        title: {
+          text: 'Spending'
+        },
+        labels: {
+          overflow: 'justify'
+        }
+      },
+      plotOptions: {
+        bar: {
+          dataLabels: {
+            enabled: true
+          }
+        }
+      },
+      legend: {
+        enabled: false
+      },
+      credits: {
+        enabled: false
+      },
+      series: [{
+        data: spending
+      }]
+    });
+  }
+
   renderMostBeersChart(beers: string[], quantity: number[]) {
     Highcharts.chart('mostBeersChart', {
       chart: {
