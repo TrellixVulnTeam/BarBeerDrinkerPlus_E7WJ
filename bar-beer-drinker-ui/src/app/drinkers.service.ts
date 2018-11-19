@@ -36,7 +36,7 @@ export class DrinkersService {
   getDrinkerMostBeers(drinker: string) {
     return this.http.get<any[]>('api/drinker_most_beers/' + drinker);
   }
-  getDrinkerTime(interval: string){
-      return this.http.get<any[]>('/api/drinker-time/' + interval);
+  getDrinkerTime(send: string){
+      return this.http.get<any[]>('/api/drinker_time/' + send);
     }
 }

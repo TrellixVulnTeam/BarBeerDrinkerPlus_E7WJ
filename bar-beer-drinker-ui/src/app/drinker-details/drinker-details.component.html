@@ -43,15 +43,18 @@
 <div class = "body" id = "content">
 <br><br><br><br>
 <p id="inputMessage">Please enter a time interval in the textboxes below. Enter in the format YYYY-MM-DD.</p>
-<input #time1
-(keyup.enter)="onClickMe(time1.value)"
-(blur)="onClickMe(time1.value); time1.value=null" id="txtbox1">
 <br><br>
-<input #time2
-(keyup.enter)="onClickMe(time2.value)"
-(blur)="onClickMe(time2.value); time2.value=null" id="txtbox2">
+<input #time1 id="txtbox1">
+<br><br><br><br>
+<input #time2 id="txtbox2">
 <br><br>
 <button (click)="OnClickMe(time1.value, time2.value)" id = "button">Generate Graph</button>
 <br><br>
 <p id = "Message">{{ clickMessage }}</p>
+</div>
+
+<div class="DrinkersTimeChart">
+  <br><br>
+  <div id="DrinkersTimeChart"></div>
+  <br><br>
 </div>

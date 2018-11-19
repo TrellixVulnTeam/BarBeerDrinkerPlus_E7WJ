@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { DrinkersService, Drinker, DrinkerTransactions} from '../drinkers.service';
-import { ModificationService, Result} from '../modification.service';
 import { HttpResponse } from '@angular/common/http';
 
 declare const Highcharts: any;
@@ -18,13 +17,10 @@ export class DrinkerDetailsComponent implements OnInit {
   drinkerTransactions: DrinkerTransactions[]
   drinkerMostBeers: any[]
   clickMessage: '';
-  result: Result;
 
   constructor(
     private drinkersService: DrinkersService,
-    private modService: ModificationService,
-    private route: ActivatedRoute
-  ) {
+    private route: ActivatedRoute) {
 
     route.paramMap.subscribe((paramMap) => {
       this.drinkerName = paramMap.get('drinkers');
@@ -74,57 +70,6 @@ export class DrinkerDetailsComponent implements OnInit {
           this.renderMostBeersChart(beers,quantity);
         }
       );
-
-      // barService.getPopularBeers(this.barName).subscribe(
-      //   data => {
-      //     console.log(data);
-      //     var beers = [];
-      //     var sold = [];
-      //     data.sort((a, b) => a.Amountsold < b.AmountSold ? 1 : a.AmountSold > b.AmountSold ? -1 : 0)
-      //     data.forEach(beer => {
-      //       sold.push(beer.AmountSold);
-      //       beers.push(beer.beers);
-      //     }
-      //   );
-      //   beers = beers.splice(0,10);
-      //   sold = sold.splice(0,10);
-      //   this.renderBeerChart(sold, beers);
-      // });
-
-    //   barService.getLargestSpenders(this.barName).subscribe(
-    //     data => {
-    //       console.log(data);
-    //       var drinkers = [];
-    //       var spending = [];
-    //       data.sort((a, b) => a.spendingAmount < b.spendingAmount ? 1 : a.spendingAmount > b.spendingAmount ? -1 : 0)
-    //       data.forEach(drinker => {
-    //         drinkers.push(drinker.drinker);
-    //         spending.push(drinker.spendingAmount);
-    //
-    //       }
-    //   );
-    //   drinkers = drinkers.splice(0,20);
-    //   spending = spending.splice(0,20);
-    //   this.renderChart(drinkers, spending);
-    // });
-
-  //   barService.getManufacturerSells(this.barName).subscribe(
-  //     data => {
-  //       console.log(data);
-  //       var manufacturers = [];
-  //       var beerSold = [];
-  //       data.sort((a, b) => a.BeersSold < b.BeersSold ? 1 : a.BeersSold > b.BeersSold ? -1 : 0)
-  //       data.forEach(manu => {
-  //         manufacturers.push(manu.Manufacturer);
-  //         beerSold.push(manu.BeersSold);
-  //
-  //       }
-  //   );
-  //   manufacturers = manufacturers.splice(0,5);
-  //   beerSold = beerSold.splice(0,5);
-  //   this.renderManuChart(manufacturers, beerSold);
-  // });
-
  }
 );
 }
@@ -138,34 +83,30 @@ export class DrinkerDetailsComponent implements OnInit {
     else
     {
       this.clickMessage = '';
-      interval: string = time1.concat("|",time2);
-      var send: string = this.drinkerName.concat("|",interval);
-      this.drinkerService.getDrinkerTimeGraph(send).subscribe(
-        data =>{
-          var time[];
-          var spending[];
-          data.forEach(time => {
-            time.push(time.time);
-            spending.push(time.total);
+      var interval = time1.concat(",",time2);
+      var send = this.drinkerName.concat(",",interval);
+      this.drinkersService.getDrinkerTime(send).subscribe(
+        data => {
+          var t = [];
+          var spending = [];
+          console.log(data);
+          data.forEach(time2 => {
+            console.log(time2.time);
+            t.push(time2.time);
+            spending.push(time2.total);
           }
         );
-        this.renderDrinkerTimeChart(time,total);
+        this.renderDrinkerTimeChart(t,spending);
         }
-        )
+      );
       }
-        }
-      )
     }
-  }
-
-  generateTimeGraph();
-
 
   ngOnInit() {
   }
 
   renderDrinkerTimeChart(time: string[], total: number[]) {
-    Highcharts.chart('mostBeersChart', {
+    Highcharts.chart('DrinkersTimeChart', {
       chart: {
         type: 'column'
       },
@@ -181,7 +122,7 @@ export class DrinkerDetailsComponent implements OnInit {
       yAxis: {
         min: 0,
         title: {
-          text: 'Spending'
+          text: 'Spending in dollars'
         },
         labels: {
           overflow: 'justify'
@@ -201,7 +142,7 @@ export class DrinkerDetailsComponent implements OnInit {
         enabled: false
       },
       series: [{
-        data: spending
+        data: total
       }]
     });
   }

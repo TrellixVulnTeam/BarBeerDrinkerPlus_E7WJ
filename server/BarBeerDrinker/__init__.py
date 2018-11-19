@@ -252,12 +252,13 @@ def get__top_consumers(name):
 def send_transaction():
     body = josn.loads(request.data);
 
+
 @app.route('/api/drinker_time/<name>', methods=["GET"])
 def get_drinker_time(name):
     try:
         if name is None:
             raise ValueError("Drinker is not specified.")
-        drinker, time1, time2 = name.split("|");
+        drinker, time1, time2 = name.split(",");
         result = database.get_drinker_time(drinker, time1, time2)
         if result is None:
             return make_response("No drinker found with the given name.", 404)
